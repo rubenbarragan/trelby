@@ -43,19 +43,19 @@ def init(doWX = True):
     # stupid hack to keep testcases working, since they don't initialize
     # opts (the doWX name is just for similarity with util)
     if not doWX or opts.isTest:
-        progPath = u"."
-        confPath = u".trelby"
+        progPath = "."
+        confPath = ".trelby"
     else:
         if isUnix:
-            progPath = unicode(
+            progPath = str(
                 os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                 "UTF-8")
 
-            confPath = unicode(os.environ["HOME"], "UTF-8") + u"/.trelby"
+            confPath = str(os.environ["HOME"], "UTF-8") + "/.trelby"
         else:
             progPath = getPathFromRegistry()
 
-            confPath = util.getWindowsUnicodeEnvVar(u"USERPROFILE") + ur"\Trelby\conf"
+            confPath = util.getWindowsUnicodeEnvVar("USERPROFILE") + r"\Trelby\conf"
 
             if not os.path.exists(confPath):
                 os.makedirs(confPath)
@@ -64,12 +64,12 @@ def getPathFromRegistry():
     registryPath = r"Software\Microsoft\Windows\CurrentVersion\App Paths\trelby.exe"
 
     try:
-        import _winreg
+        import winreg
 
-        regPathKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, registryPath)
-        regPathValue, regPathType = _winreg.QueryValueEx(regPathKey, "Path")
+        regPathKey = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, registryPath)
+        regPathValue, regPathType = winreg.QueryValueEx(regPathKey, "Path")
 
-        if regPathType == _winreg.REG_SZ:
+        if regPathType == winreg.REG_SZ:
             return regPathValue
         else:
             raise TypeError
@@ -499,7 +499,7 @@ class MyTabCtrl(wx.Window):
 
             dc.DestroyClippingRegion()
             dc.SetFont(self.boldFont)
-            dc.DrawText("×", xpos + tabW - self.paddingX * 2, self.textY)
+            dc.DrawText("ï¿½", xpos + tabW - self.paddingX * 2, self.textY)
 
             xpos += tabW
 
